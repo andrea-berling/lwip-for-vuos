@@ -255,7 +255,7 @@
  * already use it.
  */
 #if !defined MEM_LIBC_MALLOC || defined __DOXYGEN__
-#define MEM_LIBC_MALLOC                 0
+#define MEM_LIBC_MALLOC                 1
 #endif
 
 /**
@@ -1329,7 +1329,7 @@
  * an upper limit on the MSS advertised by the remote host.
  */
 #if !defined TCP_MSS || defined __DOXYGEN__
-#define TCP_MSS                         536
+#define TCP_MSS                         1488
 #endif
 
 /**
@@ -2013,7 +2013,7 @@
  * library (sharing select will need more work though).
  */
 #if !defined LWIP_SOCKET_OFFSET || defined __DOXYGEN__
-#define LWIP_SOCKET_OFFSET              0
+#define LWIP_SOCKET_OFFSET              3
 #endif
 
 /**
@@ -2064,7 +2064,7 @@
  * LWIP_SO_RCVBUF==1: Enable SO_RCVBUF processing.
  */
 #if !defined LWIP_SO_RCVBUF || defined __DOXYGEN__
-#define LWIP_SO_RCVBUF                  0
+#define LWIP_SO_RCVBUF                  1
 #endif
 
 /**
@@ -2113,7 +2113,7 @@
  * here for compatibility.
  */
 #if !defined LWIP_FIONREAD_LINUXMODE || defined __DOXYGEN__
-#define LWIP_FIONREAD_LINUXMODE         0
+#define LWIP_FIONREAD_LINUXMODE         1
 #endif
 
 /**
@@ -2282,7 +2282,7 @@
  * MIB2_STATS==1: Stats for SNMP MIB2.
  */
 #if !defined MIB2_STATS || defined __DOXYGEN__
-#define MIB2_STATS                      0
+#define MIB2_STATS                      1
 #endif
 
 #else
@@ -2425,7 +2425,7 @@
  * LWIP_IPV6==1: Enable IPv6
  */
 #if !defined LWIP_IPV6 || defined __DOXYGEN__
-#define LWIP_IPV6                       0
+#define LWIP_IPV6                       1
 #endif
 
 /**

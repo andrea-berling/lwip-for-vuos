@@ -75,13 +75,13 @@
  *    4 byte alignment -> #define MEM_ALIGNMENT 4
  *    2 byte alignment -> #define MEM_ALIGNMENT 2
  */
-#define MEM_ALIGNMENT                   1U
+#define MEM_ALIGNMENT                   4
 
 /**
  * MEM_SIZE: the size of the heap memory. If the application will send
  * a lot of data that needs to be copied, this should be set high.
  */
-#define MEM_SIZE                        1600
+#define MEM_SIZE                        65536
 
 /*
    ------------------------------------------------
@@ -93,7 +93,7 @@
  * If the application sends a lot of data out of ROM (or other static memory),
  * this should be set high.
  */
-#define MEMP_NUM_PBUF                   16
+#define MEMP_NUM_PBUF                   256
 
 /**
  * MEMP_NUM_RAW_PCB: Number of raw connection PCBs
@@ -106,19 +106,19 @@
  * per active UDP "connection".
  * (requires the LWIP_UDP option)
  */
-#define MEMP_NUM_UDP_PCB                4
+#define MEMP_NUM_UDP_PCB                8
 
 /**
  * MEMP_NUM_TCP_PCB: the number of simulatenously active TCP connections.
  * (requires the LWIP_TCP option)
  */
-#define MEMP_NUM_TCP_PCB                4
+#define MEMP_NUM_TCP_PCB                16
 
 /**
  * MEMP_NUM_TCP_PCB_LISTEN: the number of listening TCP connections.
  * (requires the LWIP_TCP option)
  */
-#define MEMP_NUM_TCP_PCB_LISTEN         4
+#define MEMP_NUM_TCP_PCB_LISTEN         8
 
 /**
  * MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP segments.
@@ -138,13 +138,13 @@
  * their destination address) to finish.
  * (requires the ARP_QUEUEING option)
  */
-#define MEMP_NUM_ARP_QUEUE              2
+#define MEMP_NUM_ARP_QUEUE              10
 
 /**
  * MEMP_NUM_SYS_TIMEOUT: the number of simulateously active timeouts.
  * (requires NO_SYS==0)
  */
-#define MEMP_NUM_SYS_TIMEOUT            8
+#define MEMP_NUM_SYS_TIMEOUT            30
 
 /**
  * MEMP_NUM_NETBUF: the number of struct netbufs.
@@ -163,19 +163,19 @@
  * for callback/timeout API communication.
  * (only needed if you use tcpip.c)
  */
-#define MEMP_NUM_TCPIP_MSG_API          8
+#define MEMP_NUM_TCPIP_MSG_API          64
 
 /**
  * MEMP_NUM_TCPIP_MSG_INPKT: the number of struct tcpip_msg, which are used
  * for incoming packets.
  * (only needed if you use tcpip.c)
  */
-#define MEMP_NUM_TCPIP_MSG_INPKT        8
+#define MEMP_NUM_TCPIP_MSG_INPKT        64
 
 /**
  * PBUF_POOL_SIZE: the number of buffers in the pbuf pool.
  */
-#define PBUF_POOL_SIZE                  8
+#define PBUF_POOL_SIZE                  64
 
 /*
    ---------------------------------
@@ -197,7 +197,7 @@
  * interfaces. If you are going to run lwIP on a device with only one network
  * interface, define this to 0.
  */
-#define IP_FORWARD                      0
+#define IP_FORWARD                      1
 
 /**
  * IP_OPTIONS: Defines the behavior for IP options.
@@ -233,7 +233,7 @@
  * PBUF_POOL_SIZE > IP_REASS_MAX_PBUFS so that the stack is still able to receive
  * packets even if the maximum amount of fragments is enqueued for reassembly!
  */
-#define IP_REASS_MAX_PBUFS              4
+#define IP_REASS_MAX_PBUFS              5
 
 /**
  * IP_FRAG_USES_STATIC_BUF==1: Use a static MTU-sized buffer for IP
@@ -371,7 +371,7 @@
 /**
  * LWIP_HAVE_LOOPIF==1: Support loop interface (127.0.0.1) and loopif.c
  */
-#define LWIP_HAVE_LOOPIF                0
+#define LWIP_HAVE_LOOPIF                1
 
 /*
    ----------------------------------------------
@@ -407,7 +407,7 @@
 /**
  * LWIP_STATS==1: Enable statistics collection in lwip_stats.
  */
-#define LWIP_STATS                      0
+#define LWIP_STATS                      1
 /*
    ---------------------------------
    ---------- PPP options ----------
