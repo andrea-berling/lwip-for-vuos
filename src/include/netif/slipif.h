@@ -56,7 +56,7 @@
  * If disabled, slipif_poll() polls the serial line (using sio_tryread()).
  */
 #ifndef SLIP_RX_FROM_ISR
-#define SLIP_RX_FROM_ISR 0
+#define SLIP_RX_FROM_ISR 1
 #endif
 
 /** Set this to 1 (default for SLIP_RX_FROM_ISR) to queue incoming packets
