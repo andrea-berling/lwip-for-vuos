@@ -15,6 +15,7 @@ endif()
 set(lwipcontribportunix_SRCS
     ${LWIP_CONTRIB_DIR}/ports/unix/port/sys_arch.c
     ${LWIP_CONTRIB_DIR}/ports/unix/port/perf.c
+    ${LWIP_CONTRIB_DIR}/addons/socket_event/socket_event.c
 )
 
 set(lwipcontribportunixnetifs_SRCS
