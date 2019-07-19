@@ -1,3 +1,6 @@
+This is a fork of the lwip project that contains some modifications to work with the vuos project.
+More infos at http://github.com/virtualsquare/vuos and https://savannah.nongnu.org/projects/lwip/.
+
 INTRODUCTION
 
 lwIP is a small independent implementation of the TCP/IP protocol suite.
