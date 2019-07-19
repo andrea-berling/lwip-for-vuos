@@ -1085,7 +1085,7 @@ lwip_recvfrom_udp_raw(struct lwip_sock *sock, int flags, struct msghdr *msg, u16
   u8_t apiflags;
   err_t err;
   u16_t buflen, copylen, copied;
-  int i;
+  size_t i;
 
   LWIP_UNUSED_ARG(dbg_s);
   LWIP_ERROR("lwip_recvfrom_udp_raw: invalid arguments", (msg->msg_iov != NULL) || (msg->msg_iovlen <= 0), return ERR_ARG;);
@@ -1275,7 +1275,7 @@ ssize_t
 lwip_recvmsg(int s, struct msghdr *message, int flags)
 {
   struct lwip_sock *sock;
-  int i;
+  size_t i;
   ssize_t buflen;
 
   LWIP_DEBUGF(SOCKETS_DEBUG, ("lwip_recvmsg(%d, message=%p, flags=0x%x)\n", s, (void *)message, flags));
@@ -1462,7 +1462,7 @@ lwip_sendmsg(int s, const struct msghdr *msg, int flags)
 #if LWIP_UDP || LWIP_RAW
   {
     struct netbuf chain_buf;
-    int i;
+    size_t i;
     ssize_t size = 0;
 
     LWIP_UNUSED_ARG(flags);
@@ -2538,6 +2538,16 @@ event_callback(struct netconn *conn, enum netconn_evt evt, u16_t len)
       LWIP_ASSERT("unknown event", 0);
       break;
   }
+
+#ifdef LWIP_HOOK_SOCKET_EVENT
+  {
+    int err;
+    if (LWIP_HOOK_SOCKET_EVENT(s, sock->rcvevent > 0, sock->sendevent != 0, sock->errevent != 0, &err) != 0) {
+        SYS_ARCH_UNPROTECT(lev);
+        return;
+    }
+  }
+#endif
 
   if (sock->select_waiting && check_waiters) {
     /* Save which events are active */

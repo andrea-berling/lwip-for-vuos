@@ -2792,9 +2792,7 @@
  * Declare your hook function prototypes in there, you may also \#include all headers
  * providing data types that are need in this file.
  */
-#ifdef __DOXYGEN__
-#define LWIP_HOOK_FILENAME "path/to/my/lwip_hooks.h"
-#endif
+#define LWIP_HOOK_FILENAME "addons/hooks.h"
 
 /**
  * LWIP_HOOK_TCP_ISN:
@@ -3251,6 +3249,27 @@
  */
 #ifdef __DOXYGEN__
 #define LWIP_HOOK_SOCKETS_GETSOCKOPT(s, sock, level, optname, optval, optlen, err)
+#endif
+
+/**
+ * LWIP_HOOK_SOCKET_EVENT(s, has_recvevent, has_sendevent, has_errevent, err)
+ * Called from socket API when an event on a socket happens.
+ * Core lock is held when this hook is called.
+ * Signature:\code{.c}
+ *   int my_hook_socket_event(int s, int has_recvevent, int has_sendevent, int has_errevent, int *err)
+ * \endcode
+ * Arguments:
+ * - s: socket file descriptor
+ * - has_recvevent: 1 if the socket has packets to receive, 0 otherwise
+ * - has_sendevent: 1 if the packets can be sent on the socket, 0 otherwise
+ * - has_errevent: 1 if an error occured on the socket, 0 otherwise
+ * - err: output error
+ * Return values:
+ * - 0: No error occured in the hook code
+ * - != 0: An error occured, and its code has been stored in err
+ */
+#ifdef __DOXYGEN__
+#define LWIP_HOOK_SOCKET_EVENT(s, has_recvevent, has_sendevent, has_errevent, err)
 #endif
 
 /**
