@@ -36,8 +36,8 @@
  */
 
 
-#ifndef LWIP_HDR_MY_SOCKETS_H
-#define LWIP_HDR_MY_SOCKETS_H
+#ifndef LWIP_HDR_LINUX_SOCKETS_H
+#define LWIP_HDR_LINUX_SOCKETS_H
 #include <poll.h>
 #include <sys/socket.h>
 #include <lwip/opt.h>
@@ -99,4 +99,4 @@ int lwip_inet_pton(int af, const char *src, void *dst);
 #define IPV6_DROP_MEMBERSHIP IPV6_LEAVE_GROUP
 #endif /* LWIP_IPV6_MLD */
 
-#endif /* LWIP_HDR_MY_SOCKETS_H */
+#endif /* LWIP_HDR_LINUX_SOCKETS_H */

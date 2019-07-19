@@ -37,8 +37,8 @@
  * Author: Adam Dunkels <adam@sics.se>
  *
  */
-#ifndef LWIP_HDR_MY_INET_H
-#define LWIP_HDR_MY_INET_H
+#ifndef LWIP_HDR_LINUX_INET_H
+#define LWIP_HDR_LINUX_INET_H
 #include <linux/in6.h>
 #define IN6ADDR_ANY_INIT {{{0,0,0,0}}}
 #include <sys/socket.h>
@@ -61,4 +61,4 @@
 #define inet_addr_from_ip4addr(target_inaddr, source_ipaddr) ((target_inaddr)->s_addr = ip4_addr_get_u32(source_ipaddr))
 #define inet_addr_to_ip4addr(target_ipaddr, source_inaddr)   (ip4_addr_set_u32(target_ipaddr, (source_inaddr)->s_addr))
 
-#endif /* LWIP_HDR_MY_INET_H */
+#endif /* LWIP_HDR_LINUX_INET_H */
