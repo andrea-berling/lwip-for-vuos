@@ -87,7 +87,6 @@
 
 #if LWIP_IPV4
 #define IP4ADDR_PORT_TO_SOCKADDR(sin, ipaddr, port) do { \
-      (sin)->sin_len = sizeof(struct sockaddr_in); \
       (sin)->sin_family = AF_INET; \
       (sin)->sin_port = lwip_htons((port)); \
       inet_addr_from_ip4addr(&(sin)->sin_addr, ipaddr); \
@@ -99,7 +98,6 @@
 
 #if LWIP_IPV6
 #define IP6ADDR_PORT_TO_SOCKADDR(sin6, ipaddr, port) do { \
-      (sin6)->sin6_len = sizeof(struct sockaddr_in6); \
       (sin6)->sin6_family = AF_INET6; \
       (sin6)->sin6_port = lwip_htons((port)); \
       (sin6)->sin6_flowinfo = 0; \
@@ -690,8 +688,8 @@ lwip_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
     }
 
     IPADDR_PORT_TO_SOCKADDR(&tempaddr, &naddr, port);
-    if (*addrlen > tempaddr.sa.sa_len) {
-      *addrlen = tempaddr.sa.sa_len;
+    if (*addrlen > sizeof(tempaddr.sa)) {
+      *addrlen = sizeof(tempaddr.sa);
     }
     MEMCPY(addr, &tempaddr, *addrlen);
 
@@ -1035,10 +1033,10 @@ lwip_sock_make_addr(struct netconn *conn, ip_addr_t *fromaddr, u16_t port,
 #endif /* LWIP_IPV4 && LWIP_IPV6 */
 
   IPADDR_PORT_TO_SOCKADDR(&saddr, fromaddr, port);
-  if (*fromlen < saddr.sa.sa_len) {
+  if (*fromlen < sizeof(saddr.sa)) {
     truncated = 1;
-  } else if (*fromlen > saddr.sa.sa_len) {
-    *fromlen = saddr.sa.sa_len;
+  } else if (*fromlen > sizeof(saddr.sa)) {
+    *fromlen = sizeof(saddr.sa);
   }
   MEMCPY(from, &saddr, *fromlen);
   return truncated;
@@ -2737,8 +2735,8 @@ lwip_getaddrname(int s, struct sockaddr *name, socklen_t *namelen, u8_t local)
   ip_addr_debug_print_val(SOCKETS_DEBUG, naddr);
   LWIP_DEBUGF(SOCKETS_DEBUG, (" port=%"U16_F")\n", port));
 
-  if (*namelen > saddr.sa.sa_len) {
-    *namelen = saddr.sa.sa_len;
+  if (*namelen > sizeof(saddr.sa)) {
+    *namelen = sizeof(saddr.sa);
   }
   MEMCPY(name, &saddr, *namelen);
 
@@ -3625,15 +3623,15 @@ lwip_setsockopt_impl(int s, int level, int optname, const void *optval, socklen_
           const struct ipv6_mreq *imr = (const struct ipv6_mreq *)optval;
           LWIP_SOCKOPT_CHECK_OPTLEN_CONN_PCB_TYPE(sock, optlen, struct ipv6_mreq, NETCONN_UDP);
           inet6_addr_to_ip6addr(&multi_addr, &imr->ipv6mr_multiaddr);
-          LWIP_ASSERT("Invalid netif index", imr->ipv6mr_interface <= 0xFFu);
-          netif = netif_get_by_index((u8_t)imr->ipv6mr_interface);
+          LWIP_ASSERT("Invalid netif index", (unsigned)imr->ipv6mr_ifindex <= 0xFFu);
+          netif = netif_get_by_index((u8_t)imr->ipv6mr_ifindex);
           if (netif == NULL) {
             err = EADDRNOTAVAIL;
             break;
           }
 
           if (optname == IPV6_JOIN_GROUP) {
-            if (!lwip_socket_register_mld6_membership(s, imr->ipv6mr_interface, &multi_addr)) {
+            if (!lwip_socket_register_mld6_membership(s, imr->ipv6mr_ifindex, &multi_addr)) {
               /* cannot track membership (out of memory) */
               err = ENOMEM;
               mld6_err = ERR_OK;
@@ -3642,7 +3640,7 @@ lwip_setsockopt_impl(int s, int level, int optname, const void *optval, socklen_
             }
           } else {
             mld6_err = mld6_leavegroup_netif(netif, &multi_addr);
-            lwip_socket_unregister_mld6_membership(s, imr->ipv6mr_interface, &multi_addr);
+            lwip_socket_unregister_mld6_membership(s, imr->ipv6mr_ifindex, &multi_addr);
           }
           if (mld6_err != ERR_OK) {
             err = EADDRNOTAVAIL;
