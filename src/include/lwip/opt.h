@@ -2024,7 +2024,9 @@
  * whole content of the default sockets.h and inet.h is skipped.
  */
 #if !defined LWIP_SOCKET_EXTERNAL_HEADERS || defined __DOXYGEN__
-#define LWIP_SOCKET_EXTERNAL_HEADERS    0
+#define LWIP_SOCKET_EXTERNAL_HEADERS    1
+#define LWIP_SOCKET_EXTERNAL_HEADER_SOCKETS_H <addons/linux_sockets.h>
+#define LWIP_SOCKET_EXTERNAL_HEADER_INET_H <addons/linux_inet.h>
 #endif
 
 /**
