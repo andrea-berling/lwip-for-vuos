@@ -496,6 +496,12 @@ netif_do_set_ipaddr(struct netif *netif, const ip4_addr_t *ipaddr, ip_addr_t *ol
     netif_issue_reports(netif, NETIF_REPORT_TYPE_IPV4);
 
     NETIF_STATUS_CALLBACK(netif);
+    LWIP_DEBUGF(NETIF_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE, ("netif: ip addr of interface %c%c set to %"U16_F".%"U16_F".%"U16_F".%"U16_F"\n",
+                netif->name[0], netif->name[1],
+                ip4_addr1_16(netif_ip4_addr(netif)),
+                ip4_addr2_16(netif_ip4_addr(netif)),
+                ip4_addr3_16(netif_ip4_addr(netif)),
+                ip4_addr4_16(netif_ip4_addr(netif))));
     return 1; /* address changed */
   }
   return 0; /* address unchanged */

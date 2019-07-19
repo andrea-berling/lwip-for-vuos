@@ -77,6 +77,10 @@ typedef __kernel_fd_set fd_set;
 #define LWIP_DONT_PROVIDE_BYTEORDER_FUNCTIONS
 #endif
 
+#if defined(LWIP_UNIX_LINUX)
+#define LWIP_DONT_PROVIDE_BYTEORDER_FUNCTIONS
+#endif
+
 struct sio_status_s;
 typedef struct sio_status_s sio_status_t;
 #define sio_fd_t sio_status_t*
