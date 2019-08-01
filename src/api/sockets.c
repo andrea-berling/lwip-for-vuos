@@ -2540,7 +2540,11 @@ event_callback(struct netconn *conn, enum netconn_evt evt, u16_t len)
 #ifdef LWIP_HOOK_SOCKET_EVENT
   {
     int err;
-    if (LWIP_HOOK_SOCKET_EVENT(s, sock->rcvevent > 0, sock->sendevent != 0, sock->errevent != 0, &err) != 0) {
+    unsigned char events = SOCKEVENT_NULL;
+    if (sock->rcvevent > 0) SOCKEVENT_SET_POLLIN(events);
+    if (sock->sendevent != 0) SOCKEVENT_SET_POLLOUT(events);
+    if (sock->errevent != 0) SOCKEVENT_SET_POLLERR(events);
+    if (LWIP_HOOK_SOCKET_EVENT(s, events, &err) != 0) {
         SYS_ARCH_UNPROTECT(lev);
         return;
     }

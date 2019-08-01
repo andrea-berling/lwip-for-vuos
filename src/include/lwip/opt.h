@@ -3258,20 +3258,19 @@
  * Called from socket API when an event on a socket happens.
  * Core lock is held when this hook is called.
  * Signature:\code{.c}
- *   int my_hook_socket_event(int s, int has_recvevent, int has_sendevent, int has_errevent, int *err)
+ *   int my_hook_socket_event(int s, unsigned char events, int *err)
  * \endcode
  * Arguments:
  * - s: socket file descriptor
- * - has_recvevent: 1 if the socket has packets to receive, 0 otherwise
- * - has_sendevent: 1 if the packets can be sent on the socket, 0 otherwise
- * - has_errevent: 1 if an error occured on the socket, 0 otherwise
+ * - events: bitmap of events, where 0x1 is for receive events, 0x2 is for send events, 0x4 is for
+ *   err events
  * - err: output error
  * Return values:
  * - 0: No error occured in the hook code
  * - != 0: An error occured, and its code has been stored in err
  */
 #ifdef __DOXYGEN__
-#define LWIP_HOOK_SOCKET_EVENT(s, has_recvevent, has_sendevent, has_errevent, err)
+#define LWIP_HOOK_SOCKET_EVENT(s, events, err)
 #endif
 
 /**
