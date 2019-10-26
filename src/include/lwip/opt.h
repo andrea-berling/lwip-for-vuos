@@ -227,14 +227,7 @@
 #define LWIP_ASSERT_CORE_LOCKED()
 #endif
 
-/**
- * Called as first thing in the lwIP TCPIP thread. Can be used in conjunction
- * with @ref LWIP_ASSERT_CORE_LOCKED to check core locking.
- * @see @ref multithreading
- */
-#if !defined LWIP_MARK_TCPIP_THREAD || defined __DOXYGEN__
-#define LWIP_MARK_TCPIP_THREAD()
-#endif
+
 /**
  * @}
  */
@@ -505,7 +498,7 @@
  * The number of sys timeouts used by the core stack (not apps)
  * The default number of timeouts is calculated here for all enabled modules.
  */
-#define LWIP_NUM_SYS_TIMEOUT_INTERNAL   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + PPP_NUM_TIMEOUTS + (LWIP_IPV6 * (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD)))
+#define LWIP_NUM_SYS_TIMEOUT_INTERNAL   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_ACD + LWIP_IGMP + LWIP_DNS + PPP_NUM_TIMEOUTS + (LWIP_IPV6 * (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD + LWIP_IPV6_DHCP6)))
 
 /**
  * MEMP_NUM_SYS_TIMEOUT: the number of simultaneously active timeouts.
