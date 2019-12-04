@@ -1,5 +1,6 @@
 #include <addons/socket_event/socket_event.h>
 #include <stdlib.h>
+#include <lwip/opt.h>
 
 int (*socket_event_callback)(int, unsigned char, void*, int*) = NULL;
 void *socket_event_arg = NULL;
@@ -12,6 +13,7 @@ int my_hook_socket_event(int s, unsigned char events, int *err) {
 }
 
 int register_socket_event_callback(int (*cb)(int, unsigned char, void*, int*), void *arg) {
+    LWIP_ASSERT_CORE_LOCKED();
     if (!socket_event_callback)
     {
         socket_event_callback = cb;
